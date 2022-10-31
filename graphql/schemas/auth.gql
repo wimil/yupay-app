@@ -1,0 +1,22 @@
+type AccessToken {
+  accessToken: String
+}
+
+input RegisterInput {
+  firstName: String!
+  surname: String!
+  secondSurname: String!
+  email: String!
+  password: String!
+  phoneCode: String
+  phoneNumber: String
+}
+
+extend type Query {
+  me: User!
+}
+
+extend type Mutation {
+  login(email: String!, password: String!): AccessToken!
+  register(input: RegisterInput): AccessToken!
+}

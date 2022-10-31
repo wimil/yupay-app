@@ -1,0 +1,33 @@
+type Business {
+  id: ID
+  name: String
+  ruc: Float
+  fiscalAddress: String
+  tradename: String
+  ubigeo: String
+  logo: String
+}
+
+input BusinessInput {
+  name: String
+  ruc: Float
+  fiscalAddress: String
+  tradename: String
+  ubigeo: String
+  logo: String
+}
+
+input RegisterBusinessInput {
+  ruc: String
+  solUsername: String
+  solPassword: String
+}
+
+extend type Query {
+  getBusinessByUser: [Business]!
+}
+
+extend type Mutation {
+  createBusiness(input: RegisterBusinessInput!): Business!
+  updateBusiness(id: String!, input: BusinessInput): Business!
+}

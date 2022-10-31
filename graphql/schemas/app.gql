@@ -1,0 +1,8 @@
+type StartApp {
+  offices: [Office]!
+  currencies: [Currency]!
+}
+
+extend type Query {
+  startApp(business: String!): StartApp!
+}

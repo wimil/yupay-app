@@ -1,0 +1,35 @@
+type OfficeSeries {
+  number: Int
+  serie: String
+  type: String
+}
+
+type Office {
+  id: ID
+  name: String
+  address: String
+  series: [OfficeSeries]
+  users: [String]
+  warehouses: [String]
+}
+
+input OfficeSeriesInput {
+  number: Int
+  serie: String
+  type: String
+}
+
+input OfficeInput {
+  name: String
+  address: String
+  series: [OfficeSeriesInput]
+  users: [String]
+  warehouses: [String]
+}
+
+
+extend type Mutation {
+  createOffice(business: String!, input: OfficeInput!): Office!
+  updateOffice(id: String, business: String!, input: OfficeInput): Office!
+  #destroyOffice(id: String, business: String)
+}

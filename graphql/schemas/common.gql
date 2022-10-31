@@ -1,0 +1,10 @@
+type Currency {
+  name: String
+  code: String
+  symbol: String
+}
+
+type Select {
+  text: String
+  value: String
+}
