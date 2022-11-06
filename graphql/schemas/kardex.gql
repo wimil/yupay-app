@@ -1,0 +1,55 @@
+enum KardexType {
+	IN
+	OUT
+}
+
+enum KardexInputAction {
+	IN
+	OUT
+	TRANSFER
+	ADJUSTMENT
+}
+
+type Kardex {
+	id: ID
+	balance: Float
+	detail: String
+	num: Int
+	prevBalance: Float
+	totalIn: Float
+	totalOut: Float
+	type: KardexType!
+	createdAt: Date
+	updatedAt: Date
+}
+
+type PaginateKardex {
+	docs: [Kardex]!
+	totalDocs: Int
+	limit: Int
+	hasPrevPage: Boolean
+	hasNextPage: Boolean
+	page: Int
+	totalPages: Int
+	offset: Int
+	prevPage: Int
+	nextPage: Int
+	pagingCounter: Int
+}
+
+input KardexInput {
+	fromId: ID!
+	toId: ID
+	detail: String!
+	quantity: Float!
+	action: KardexInputAction!
+}
+
+
+extend type Query {
+	getKardexByProduct(businessId: ID!, productId: ID!, warehouseId: ID!, page: Int!): PaginateKardex!
+}
+
+extend type Mutation {
+	saveKardex(businessId: ID!, productId: ID!, input: KardexInput!): ResponseSuccess
+}

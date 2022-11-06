@@ -1,0 +1,11 @@
+type Category {
+	id: ID
+	name: String
+	createdAt: Date
+	updatedAt: Date
+}
+
+extend type Query {
+	getCategories: [Category]!
+	getCategoriesByBusiness(businessId: ID!): [Category]!
+}

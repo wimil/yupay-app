@@ -1,47 +1,49 @@
-import fastify from "fastify";
-import MercuriusGQLUpload from "mercurius-upload";
-import cors from "fastify-cors";
-import mercurius from "mercurius";
+import Fastify from "fastify";
+import cors from "@fastify/cors";
 import schema from "./graphql/schemas";
 import resolvers from "./graphql/resolvers";
-import "./services/mongodb";
+import "#root/services/mongodb";
 import Auth from "./services/auth";
+import { ApolloServer } from "@apollo/server";
+import fastifyApollo, {
+  fastifyApolloDrainPlugin,
+} from "@as-integrations/fastify";
+import utc from "dayjs/plugin/utc";
+import dayjs from "dayjs";
+import dateScalar from "#graphql/scalars/dateScalar";
+
+dayjs.extend(utc);
 
 //console.log(schema);
 
 const Port = process.env.FASTIFY_PORT || 4500;
 
-const app = fastify({ logger: process.env.APP_DEBUG });
+const fastify = Fastify({ logger: process.env.APP_DEBUG });
 
-// Activate plugins below:
-app.register(cors, {
+fastify.register(cors, {
   origin: "*",
   methods: ["POST"],
 });
 
-app.register(MercuriusGQLUpload, {
-  // options passed to processRequest from graphql-upload
+const apollo = new ApolloServer({
+  typeDefs: schema,
+  resolvers: {
+    ...resolvers,
+    Date: dateScalar,
+  },
+  plugins: [fastifyApolloDrainPlugin(fastify)],
 });
 
-app.register(mercurius, {
-  schema,
-  resolvers,
-  graphiql: true,
-  allowBatchedQueries: true,
-  context: async (request, reply) => {
+await apollo.start();
+
+await fastify.register(fastifyApollo(apollo), {
+  context: async (request) => {
     return {
       auth: await Auth(request),
     };
   },
 });
 
-// create server
-const start = async () => {
-  try {
-    await app.listen(Port);
-  } catch (err) {
-    app.log.error(err);
-    process.exit(1);
-  }
-};
-start();
+await fastify.listen({
+  port: Port,
+});

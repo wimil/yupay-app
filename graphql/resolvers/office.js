@@ -1,14 +1,14 @@
-import Office from "../../models/office";
+import Office from "#models/office";
 
 export default {
   Query: {
-    /*async getOfficesByBusiness(_, { business }, ctx) {
-      const offices = Office.find({
+    async getOfficesByBusiness(_, { business }, ctx) {
+      const offices = await Office.find({
         business: business,
       });
 
       return offices;
-    },*/
+    },
   },
   Mutation: {
     async createOffice(_, { business, input }, ctx, info) {

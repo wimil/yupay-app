@@ -12,15 +12,25 @@ const model = mongoose.Schema(
     address: {
       type: String,
     },
+    series: {
+      type: Array,
+      default: [],
+    },
     users: [
       {
         type: mongoose.ObjectId,
         ref: "User",
       },
     ],
+    warehouses: [
+      {
+        type: mongoose.ObjectId,
+        ref: "Warehouse",
+      },
+    ],
   },
   {
-    timestamp: true,
+    timestamps: true,
     versionKey: false,
   }
 );

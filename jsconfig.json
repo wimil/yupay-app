@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "#root/*": ["./*"],
+        "#gql/*": ["graphql/*"],
+        "#models/*": ["models/*"],
+        "#config/*": ["config/*"],
+        "#graphql/*": ["graphql/*"]
+      }
+    }
+  }
+  

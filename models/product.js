@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
+import FloatPlugin from "@waape/mongoose-float";
+import mongoosePaginate from "mongoose-paginate-v2";
 
-const product = mongoose.Schema(
+const Float = FloatPlugin.loadType(mongoose, 7);
+
+const model = mongoose.Schema(
   {
     business: {
       type: mongoose.ObjectId,
@@ -14,7 +18,11 @@ const product = mongoose.Schema(
       type: mongoose.ObjectId,
       ref: "Category",
     },
-    name: {
+    description: {
+      type: String,
+      required: true,
+    },
+    currency: {
       type: String,
       required: true,
     },
@@ -29,48 +37,65 @@ const product = mongoose.Schema(
     },
     icbper: {
       type: Boolean,
+      required: true,
     },
     alertQuantity: {
       type: Number,
     },
     igvType: {
       type: String,
+      required: true,
     },
     iscPublicUnitPrice: {
-      type: mongoose.Decimal128,
+      type: Float,
     },
     iscValue: {
-      type: mongoose.Decimal128,
+      type: Float,
     },
     salesWithoutStock: {
       type: Boolean,
+      required: true,
     },
     stockControl: {
       type: Boolean,
     },
     unit: {
-      type: String,
+      type: mongoose.Mixed,
+      required: true,
     },
     unitPrice: {
-      type: mongoose.Decimal128,
+      type: Float,
+      required: true,
     },
     unitPriceIncIgv: {
       type: Boolean,
+      required: true,
     },
     priceVariants: [
       {
         name: String,
         office: mongoose.ObjectId,
-        quantityMin: Number,
-        unitPrice: mongoose.Decimal128,
-        unitPriceIncIgv: Boolean,
+        quantityMin: {
+          type: Number,
+          required: true,
+        },
+        unitPrice: {
+          type: Float,
+          required: true,
+        },
+        unitPriceIncIgv: {
+          type: Boolean,
+          required: true,
+        },
       },
     ],
   },
   {
-    timestamp: true,
+    timestamps: true,
     versionKey: false,
   }
 );
 
-export default mongoose.model("Product", product);
+model.plugin(mongoosePaginate);
+
+export default mongoose.model("Product", model);

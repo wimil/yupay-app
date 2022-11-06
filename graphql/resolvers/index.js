@@ -4,6 +4,12 @@ import business from "./business";
 import auth from "./auth";
 import office from "./office";
 import app from "./app";
+import subscription from "./subscription";
+import warehouse from "./warehouse";
+import unit from "./unit";
+import category from "./category";
+import currency from "./currency";
+import kardex from "./kardex";
 
 //const resolvers = merge(product);
 
@@ -13,5 +19,11 @@ export default merge(
   business,
   auth,
   office,
-  app
+  app,
+  subscription,
+  warehouse,
+  unit,
+  category,
+  currency,
+  kardex
 );

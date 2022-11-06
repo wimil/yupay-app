@@ -1,0 +1,10 @@
+type Warehouse {
+	id: ID
+	name: String
+	address: String
+	createdAt: String
+}
+
+extend type Query {
+	getWarehousesByBusiness(business: ID!): [Warehouse]
+}

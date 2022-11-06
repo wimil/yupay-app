@@ -1,7 +1,6 @@
-import User from "../../models/user";
-//import { generateAccessToken } from "../../helpers/utils";
-import Hash from "../../helpers/hash";
-import Jwt from "../../helpers/jwt";
+import User from "#models/user";
+import Hash from "#root/helpers/hash";
+import Jwt from "#root/helpers/jwt";
 
 export default {
   Query: {

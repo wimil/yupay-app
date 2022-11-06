@@ -1,33 +1,48 @@
-type Business {
-  id: ID
-  name: String
-  ruc: Float
-  fiscalAddress: String
-  tradename: String
-  ubigeo: String
-  logo: String
+type BusinessSettings {
+	printBankAccounts: String
+	productsDefaultSockControl: Boolean
+	productsDefaultSalesWithoutStock: Boolean
+	printDefaultFormat: String
+	printHeader: String
+	printNumberDecimals: Int
+	printInvoicesA4Columns: [String]
+	printInvoicesA5Columns: [String]
+	sunatLegend2001: Boolean
+	sunatLegend2002: Boolean
 }
 
+type Business {
+	id: ID
+	name: String
+	ruc: Float
+	fiscalAddress: String
+	tradename: String
+	ubigeo: String
+	logo: String
+	settings: BusinessSettings
+}
+
+
 input BusinessInput {
-  name: String
-  ruc: Float
-  fiscalAddress: String
-  tradename: String
-  ubigeo: String
-  logo: String
+	name: String
+	ruc: Float
+	fiscalAddress: String
+	tradename: String
+	ubigeo: String
+	logo: String
 }
 
 input RegisterBusinessInput {
-  ruc: String
-  solUsername: String
-  solPassword: String
+	ruc: String
+	solUsername: String
+	solPassword: String
 }
 
 extend type Query {
-  getBusinessByUser: [Business]!
+	getBusinessByUser: [Business]!
 }
 
 extend type Mutation {
-  createBusiness(input: RegisterBusinessInput!): Business!
-  updateBusiness(id: String!, input: BusinessInput): Business!
+	createBusiness(input: RegisterBusinessInput!): Business!
+	updateBusiness(id: String!, input: BusinessInput): Business!
 }

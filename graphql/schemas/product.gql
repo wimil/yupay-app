@@ -1,67 +1,89 @@
 type ProductPriceVariants {
-  name: String
-  officeId: String
-  quantityMin: Int
-  unitPrice: Float
-  unitPriceIncIgv: Boolean
+	name: String
+	officeId: String
+	quantityMin: Int
+	unitPrice: Float
+	unitPriceIncIgv: Boolean
 }
 
 input ProductPriceVariantsInput {
-  name: String
-  office: String
-  quantityMin: Int!
-  unitPrice: Float!
-  unitPriceIncIgv: Boolean!
+	name: String
+	office: String
+	quantityMin: Int!
+	unitPrice: Float!
+	unitPriceIncIgv: Boolean!
 }
 
 type Product {
-  id: ID
-  business: String
-  addedBy: String
-  category: String
-  name: String!
-  photo: String
-  code: String
-  barcode: String
-  icbper: String
-  alertQuantity: Float
-  igvType: String
-  iscPublicUnitPrice: Float
-  iscValue: Float
-  salesWithoutStock: Boolean
-  stockControl: Boolean
-  unit: String
-  unitPrice: Float
-  unitPriceIncIgv: Float
-  priceVariants: [ProductPriceVariants]
+	id: ID
+	business: String
+	addedBy: String
+	_currency: Currency
+	category: Category
+	categoryName: String
+	description: String!
+	photo: String
+	code: String
+	barcode: String
+	icbper: String
+	# alertQuantity: String
+	igvType: String
+	iscPublicUnitPrice: Float
+	iscValue: Int
+	salesWithoutStock: Boolean
+	stockControl: Boolean
+	unit: String
+	_unit: Unit
+	unitPrice: Float
+	unitPriceIncIgv: Boolean
+	priceVariants: [ProductPriceVariants]
+	createdAt: Date
+	updatedAt: Date
 }
 
 input ProductInput {
-  category: String
-  currency: String
-  name: String!
-  photoFile: Upload
-  code: String
-  barcode: String
-  icbper: Boolean
-  alertQuantity: Int
-  igvType: String
-  iscType: String
-  iscPublicUnitPrice: Float
-  iscValue: Float
-  salesWithoutStock: Boolean
-  stockControl: Boolean
-  unit: String
-  unitPrice: Float
-  unitPriceIncIgv: Boolean
-  priceVariants: [ProductPriceVariantsInput]
+	categoryName: String
+	currency: String!
+	description: String!
+	photoFile: Upload
+	photo: String
+	code: String
+	barcode: String
+	icbper: Boolean!
+	# alertQuantity: Float
+	igvType: String!
+	iscType: String!
+	iscPublicUnitPrice: Float
+	iscValue: Int
+	salesWithoutStock: Boolean!
+	stockControl: Boolean!
+	unit: String!
+	unitPrice: Float!
+	unitPriceIncIgv: Boolean!
+	priceVariants: [ProductPriceVariantsInput]!
+	unspsc: String
+	unspscName: String
+}
+
+type PaginateProduct {
+	docs: [Product]!
+	totalDocs: Int
+	limit: Int
+	hasPrevPage: Boolean
+	hasNextPage: Boolean
+	page: Int
+	totalPages: Int
+	offset: Int
+	prevPage: Int
+	nextPage: Int
+	pagingCounter: Int
 }
 
 extend type Query {
-  getProducts: [Product]!
+	getProductsByBusiness(businessId: ID!, page: Int, search: String): PaginateProduct!
 }
 
 extend type Mutation {
-  createProduct(businessId: String!, input: ProductInput): Product!
-  updateProduct(businessId: String!, input: ProductInput): Product!
+	createProduct(businessId: String!, input: ProductInput!): Product!
+	updateProduct(businessId: ID!, productId: ID!, input: ProductInput): Product!
 }

@@ -1,0 +1,9 @@
+type Unit {
+	code: String
+	sunatCode: String
+	name: String
+}
+
+extend type Query {
+	getUnits: [Unit]!
+}

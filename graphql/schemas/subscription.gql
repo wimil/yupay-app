@@ -1,0 +1,12 @@
+type Subscription {
+	name: String
+	address: String
+	limits: PlanLimits
+	startDate: Date
+	endDate: Date
+	months: Int
+}
+
+extend type Query {
+	getSubscriptionByBusiness(business: ID!): Subscription
+}

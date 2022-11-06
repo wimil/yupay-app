@@ -1,10 +1,16 @@
-type Currency {
-  name: String
-  code: String
-  symbol: String
+type Select {
+	text: String
+	value: String
 }
 
-type Select {
-  text: String
-  value: String
+type PlanLimits {
+	docs: Int
+	offices: Int
+	warehouses: Int
+	users: Int
+	products: Int 
+}
+
+type ResponseSuccess {
+	success: Boolean
 }

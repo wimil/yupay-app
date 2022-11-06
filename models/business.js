@@ -10,11 +10,8 @@ const model = mongoose.Schema(
       type: String,
       unique: true,
     },
-    solUsername: {
-      type: String,
-    },
-    solPassword: {
-      type: String,
+    sol: {
+      type: Object,
     },
     fiscalAddress: {
       type: String,
@@ -28,7 +25,10 @@ const model = mongoose.Schema(
     logo: {
       type: String,
     },
-    type: String,
+    settings: {
+      type: Object
+    },
+    /*type: String,
     department: String,
     province: String,
     district: String,
@@ -42,7 +42,7 @@ const model = mongoose.Schema(
     fechaPle: String,
     padrones: Array,
     fechaBaja: String,
-    profesion: String,
+    profesion: String,*/
     users: [
       {
         type: mongoose.ObjectId,
@@ -51,7 +51,7 @@ const model = mongoose.Schema(
     ],
   },
   {
-    timestamp: true,
+    timestamps: true,
     versionKey: false,
   }
 );

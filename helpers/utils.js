@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import jwt from "jsonwebtoken";
+import { GraphQLError } from "graphql";
 
 const extensions = [".gql", ".graphql"];
 
@@ -45,4 +46,19 @@ export const parseBearerToken = (authorization) => {
     return null;
   }
   return parts[1];
+};
+
+export const throwGqlError = ({
+  message,
+  code = "BAD_USER_INPUT",
+  data = [],
+}) => {
+  throw new GraphQLError(message, {
+    extensions: {
+      code,
+      http: {
+        status: 404,
+      },
+    },
+  });
 };
