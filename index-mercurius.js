@@ -1,10 +1,9 @@
-//Index Fastify with apollo
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import schema from "./graphql/schemas";
 import resolvers from "./graphql/resolvers";
 import "#root/services/mongodb";
-
+import Auth from "./services/auth";
 import { ApolloServer } from "@apollo/server";
 import fastifyApollo, {
   fastifyApolloDrainPlugin,
@@ -12,8 +11,7 @@ import fastifyApollo, {
 import utc from "dayjs/plugin/utc";
 import dayjs from "dayjs";
 import dateScalar from "#graphql/scalars/dateScalar";
-import { apolloContext } from "./services/apollo";
-import floatString from "./graphql/scalars/floatString";
+import mercurius from "mercurius";
 
 dayjs.extend(utc);
 
@@ -28,31 +26,24 @@ fastify.register(cors, {
   methods: ["POST"],
 });
 
-const apollo = new ApolloServer({
-  typeDefs: schema,
+await fastify.register(mercurius, {
+  schema,
   resolvers: {
     ...resolvers,
     Date: dateScalar,
-    FloatString: floatString,
   },
-  plugins: [fastifyApolloDrainPlugin(fastify)],
+  context: async (request) => {
+    return {
+      auth: await Auth(request),
+    };
+  },
 });
-
-await apollo.start();
-
-await fastify.register(fastifyApollo(apollo), {
-  context: apolloContext,
-});
-
-/*await fastify.listen({
-  port: Port,
-});*/
 
 const start = async () => {
   try {
     await fastify.listen({ port: 4600 });
   } catch (err) {
-    fastify.log.error(err);
+    //fastify.log.error(err);
     //process.exit(1);
   }
 };

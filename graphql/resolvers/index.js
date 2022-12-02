@@ -10,6 +10,9 @@ import unit from "./unit";
 import category from "./category";
 import currency from "./currency";
 import kardex from "./kardex";
+import entity from "./entity";
+import autocomplete from "./autocomplete";
+import purchase from "./purchase";
 
 //const resolvers = merge(product);
 
@@ -25,5 +28,8 @@ export default merge(
   unit,
   category,
   currency,
-  kardex
+  kardex,
+  entity,
+  autocomplete,
+  purchase
 );

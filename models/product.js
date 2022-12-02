@@ -21,10 +21,12 @@ const model = mongoose.Schema(
     description: {
       type: String,
       required: true,
+      uppercase: true,
     },
     currency: {
       type: String,
       required: true,
+      uppercase: true,
     },
     photo: {
       type: String,

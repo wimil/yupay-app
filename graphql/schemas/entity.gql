@@ -1,0 +1,51 @@
+type Entity {
+	id: ID
+	name: String
+	photo: String
+	email: String
+	phoneNumber: String
+	document: String
+	docType: String
+	_docType: Select
+	address: String
+	addresses: [String]
+	observation: String
+	createdAt: Date
+}
+
+type PaginateEntity {
+	docs: [Entity]!
+	totalDocs: Int
+	limit: Int
+	hasPrevPage: Boolean
+	hasNextPage: Boolean
+	page: Int
+	totalPages: Int
+	offset: Int
+	prevPage: Int
+	nextPage: Int
+	pagingCounter: Int
+}
+
+input EntityInput {
+	name: String!
+	photoFile: Upload
+	email: String
+	phoneNumber: String
+	document: String!
+	docType: String!
+	address: String
+	addresses: [String]
+	observation: String
+}
+
+extend type Query {
+	getEntitiesByBusiness(page: Int!, search: String): PaginateEntity!
+	showEntityById(entityId: ID!): Entity!
+}
+
+extend type Mutation {
+	createEntity(input: EntityInput!): ResponseSuccess
+	updateEntity(entityId: ID!, input: EntityInput!): ResponseSuccess
+	deleteEntity(entityId: ID!): ResponseSuccess
+}

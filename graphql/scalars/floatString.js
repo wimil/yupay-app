@@ -1,21 +1,20 @@
 import { GraphQLScalarType, Kind } from "graphql";
-import dayjs from "dayjs";
 
 export default new GraphQLScalarType({
-  name: "Date",
-  description: "Date custom scalar type",
+  name: "FloatString",
+  description: "Accept Float in string or float",
   serialize(value) {
     //return value.getTime(); // Convert outgoing Date to integer for JSON
-    return dayjs(value).utc().toISOString();
+    return value;
   },
   parseValue(value) {
     //return new Date(value); // Convert incoming integer to Date
-    return dayjs(value);
+    return parseFloat(value);
   },
   parseLiteral(ast) {
-    if (ast.kind === Kind.INT) {
+    if (ast.kind === Kind.FLOAT || ast.kind === Kind.STRING) {
       // Convert hard-coded AST string to integer and then to Date
-      return new Date(parseInt(ast.value, 10));
+      return parseFloat(ast.value);
     }
     // Invalid hard-coded value (not an integer)
     return null;

@@ -1,0 +1,78 @@
+type Purchase {
+	id: ID
+	provider: Entity
+	currency: String
+	docType: String
+	docSerie: String
+	docNumber: String
+	num: Int
+	total: Float
+	totalString: String
+	pruchasedAt: Date
+	createdAt: Date
+	addedBy: User
+	voided: Boolean
+	voidedAt: Date
+}
+
+type PaginatePurchase {
+	docs: [Purchase]!
+	totalDocs: Int
+	limit: Int
+	hasPrevPage: Boolean
+	hasNextPage: Boolean
+	page: Int
+	totalPages: Int
+	offset: Int
+	prevPage: Int
+	nextPage: Int
+	pagingCounter: Int
+}
+
+input PurchaseProviderInput {
+	id: ID!
+	docType: String!
+	document: String!
+	name: String!
+	photo: String
+	address: String
+}
+
+input PurchaseItemInput {
+	warehouse: String!
+	product: String!
+	code: String!
+	description: String!
+	detail: String
+	quantity: FloatString!
+	# total: Float!
+	unit: String!
+	unitPrice: FloatString!
+}
+
+input PurchaseAditionalFields {
+	title: String
+	description: String
+}
+
+input PurchaseInput {
+	provider: PurchaseProviderInput!
+	currency: String!
+	docType: String!
+	docSerie: String
+	docNumber: String
+	items: [PurchaseItemInput]!
+	observation: String
+	aditionalFields: [PurchaseAditionalFields]!
+	purchasedAt: String
+}
+
+extend type Query {
+	getPurchasesByBusiness(page: Int!, filter: SimpleFilterInput): [Purchase]!
+	showPurchase(id: ID!): Purchase!
+}
+
+extend type Mutation {
+	createPurchase(input: PurchaseInput!): ResponseSuccess
+	cancelPurchase(id: ID!): ResponseSuccess
+}

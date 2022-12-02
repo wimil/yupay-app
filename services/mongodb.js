@@ -12,3 +12,5 @@ mongoose
   .catch((err) => {
     console.error("error connection to MongoDB", err.message);
   });
+
+export const connection = mongoose.connection;

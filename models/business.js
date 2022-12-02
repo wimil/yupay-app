@@ -5,6 +5,7 @@ const model = mongoose.Schema(
     name: {
       type: String,
       unique: true,
+      uppercase: true,
     },
     ruc: {
       type: String,

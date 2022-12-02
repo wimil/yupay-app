@@ -6,17 +6,19 @@ const model = mongoose.Schema(
       type: mongoose.ObjectId,
       ref: "Business",
     },
-    name: {
-      type: String,
-      index: true,
-      uppercase: true,
+    office: {
+      type: mongoose.ObjectId,
+      ref: "Office",
+    },
+    client: {
+      type: mongoose.ObjectId,
+      ref: "Entity",
     },
   },
   {
-    //_id: false,
     timestamps: true,
     versionKey: false,
   }
 );
 
-export default mongoose.model("Category", model);
+export default mongoose.model("Invoice", model);

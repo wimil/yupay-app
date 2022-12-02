@@ -50,6 +50,7 @@ const user = await User.create({
   firstName: "Andy",
   surname: "Reynaldo",
   secondSurname: "Laveriano",
+  fullName: "Andy Reynaldo",
   phoneCode: "51",
   phoneNumber: "902447192",
   photo: null,

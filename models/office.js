@@ -8,6 +8,7 @@ const model = mongoose.Schema(
     },
     name: {
       type: String,
+      uppercase: true,
     },
     address: {
       type: String,

@@ -8,7 +8,9 @@ export const makeKardexDetail = {
   cpe: () => {
     //
   },
-  purchase: () => {},
+  purchase: (docType, docSerie, docNumber) => {
+    return `[COMPRA] ${docType} ${docSerie}-${docNumber}`;
+  },
   transfer: (from, to, detail) => {
     return `[${from} -> ${to}] ${detail}`.toUpperCase();
   },
@@ -20,7 +22,7 @@ export const makeKardexDetail = {
   },
 };
 
-const getLastKardex = async ({ business, product, warehouse }) => {
+export const getLastKardex = async ({ business, product, warehouse }) => {
   return await Kardex.findOne(
     {
       business,
@@ -175,10 +177,11 @@ export const adjustmentKardex = async ({
   const lastKardex = await getLastKardex({ business, product, warehouse });
 
   if (!lastKardex) {
-    throwGqlError({
-      message:
-        "No existen movimientos anteriores para realizar el ajuste, debe registrar un ingreso o salida.",
-    });
+    /*throw new GraphQLError("test", {
+      extensions: {
+        code: "BAD",
+      },
+    });*/
   }
 
   if (lastKardex.balance === balance) {

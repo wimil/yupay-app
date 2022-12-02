@@ -56,9 +56,27 @@ export const throwGqlError = ({
   throw new GraphQLError(message, {
     extensions: {
       code,
-      http: {
-        status: 404,
-      },
+      data,
     },
   });
+};
+
+export const makeKardexDetail = {
+  cpe: () => {
+    //
+  },
+  purchase: (purchaseNum, docType, docSerie, docNumber, voided = false) => {
+    return `${
+      voided ? "[ANULACION]" : ""
+    }[COMPRA ${purchaseNum}] ${docType} ${docSerie}-${docNumber}`;
+  },
+  transfer: (from, to, detail) => {
+    return `[${from} -> ${to}] ${detail}`.toUpperCase();
+  },
+  cancel: () => {
+    //
+  },
+  adjustment: (detail) => {
+    return `[Ajuste] ${detail}`.toUpperCase();
+  },
 };

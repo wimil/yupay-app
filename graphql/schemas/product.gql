@@ -18,6 +18,7 @@ type Product {
 	id: ID
 	business: String
 	addedBy: String
+	currency: String
 	_currency: Currency
 	category: Category
 	categoryName: String
@@ -86,4 +87,5 @@ extend type Query {
 extend type Mutation {
 	createProduct(businessId: String!, input: ProductInput!): Product!
 	updateProduct(businessId: ID!, productId: ID!, input: ProductInput): Product!
+	deleteProduct(businessId: ID!, productId: ID!): ResponseSuccess
 }

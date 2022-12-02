@@ -1,0 +1,5 @@
+union AutocompleteResult = Entity | Product
+
+extend type Query {
+	autocomplete(type: String!, search: String, limit: Int): [AutocompleteResult]
+}

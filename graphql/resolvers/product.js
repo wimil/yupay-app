@@ -2,6 +2,7 @@ import Product from "#models/product";
 import { findUnitByCode } from "#root/config/units";
 import Category from "#root/models/category";
 import { currenciesKeyByCode } from "#config/currency";
+import Kardex from "#root/models/kardex";
 
 const findOneOrCreate = async (categoryName, businessId) => {
   const catName = categoryName ? categoryName.toUpperCase() : null;
@@ -66,6 +67,22 @@ export default {
       });
 
       return product;
+    },
+
+    async deleteProduct(_, { businessId, productId }, ctx) {
+      await Product.findOneAndRemove({
+        business: businessId,
+        _id: productId,
+      });
+
+      await Kardex.deleteMany({
+        business: businessId,
+        product: productId,
+      });
+
+      return {
+        success: true,
+      };
     },
   },
   Product: {

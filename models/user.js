@@ -20,6 +20,9 @@ const model = mongoose.Schema(
     secondSurname: {
       type: String,
     },
+    fullName: {
+      type: String,
+    },
     phoneCode: {
       type: String,
     },

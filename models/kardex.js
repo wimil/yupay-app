@@ -28,9 +28,11 @@ const model = mongoose.Schema(
     detail: {
       type: String,
       required: true,
+      uppercase: true,
     },
     num: {
       type: Number,
+      index: true,
       required: true,
     },
     prevBalance: {
